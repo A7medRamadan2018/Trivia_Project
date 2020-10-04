@@ -61,12 +61,15 @@ Base URL: At present this app can only be run locally and is not hosted as a bas
 Authentication: This version of the application does not require authentication or API keys.
 
 ## Error Handling
-Errors are returned as JSON objects in the following format:
+Errors are returned as JSON objects in the following 
+```bash
+format:
 {
     "success": False, 
     "error": 404,
     "message": "Resource Not Found"
 }
+```
 The API will return three error types when requests fail:
 
 400: Bad Request
@@ -78,7 +81,7 @@ GET /api/categories
     
 Request parameters: none
 Example response:
-{
+```bash{
   "categories": {
     "1": "Science", 
     "2": "Art", 
@@ -89,12 +92,12 @@ Example response:
   }, 
   "success": true
 }
-
+```
 GET /api/questions?page=<page_number> Fetches a paginated dictionary of questions of all available categories
 
 Request parameters (optional): page:int
 Example response:
- {
+ ```bash{
     "categories": {
         "1": "Science",
         "2": "Art",
@@ -165,22 +168,22 @@ Example response:
     "success": true,
     "total_questions": 8
 }
-
+```
 DELETE /api/questions/<question_id> 
     Delete an existing questions from the available questions
 
 Request arguments: question_id:int
 Example response:
-{
+```bash{
   "success": true
 }
-
+```
 POST /api/questions 
     Add a new question to the repository of available questions
 
 Request body: {question:string, answer:string, difficulty:int, category:string}
 Example response:
-{
+```bash{
     "categories": {
         "1": "Science",
         "2": "Art",
@@ -258,13 +261,14 @@ Example response:
     "success": true,
     "total_questions": 9
 }
+```
 
 POST /api/questions/search 
     Fetches all questions where a substring matches the search term (not case-sensitive)
 
 Request body: {searchTerm:string}
 Example response:
-{
+```bash{
     "current_category": null,
     "questions": [
         {
@@ -292,11 +296,12 @@ Example response:
     "success": true,
     "total_questions": 3
 }
+```
 
 GET /api/categories/<int:category_id>/questions Fetches a dictionary of questions for the specified category
 
 Request argument: category_id:int
-{
+```{
   "current_category": "2", 
   "questions": [
     {
@@ -331,12 +336,12 @@ Request argument: category_id:int
   "success": true, 
   "total_questions": 4
 }
-
+```
 POST /api/quizzes Fetches one random question within a specified category. Previously asked questions are not asked again.
 
 Request body: {previous_questions: arr, quiz_category: {id:int, type:string}}
 Example response:
-{
+```{
     "question": {
         "answer": "Jackson Pollock",
         "category": "2",
@@ -346,6 +351,7 @@ Example response:
     },
     "success": true
 }
+```
 
 ## Testing
 To run the tests, run
