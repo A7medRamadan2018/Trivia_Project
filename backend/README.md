@@ -57,30 +57,38 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 ## API References
 ## Getting Started
 
-Base URL: At present this app can only be run locally and is not hosted as a base URL. The backend app is hosted at the default, http://127.0.0.1:5000/, which is set as a proxy in the frontend configuration.
-Authentication: This version of the application does not require authentication or API keys.
+**Base URL**: At present this app can only be run locally and is not hosted as a base URL. The backend app is hosted at the default, http://127.0.0.1:5000/, which is set as a proxy in the frontend configuration.
+
+**Authentication**: This version of the application does not require authentication or API keys.
 
 ## Error Handling
-Errors are returned as JSON objects in the following 
+
+return the errors as JSON objects in specific format :
+
 ```bash
-format:
 {
     "success": False, 
     "error": 404,
     "message": "Resource Not Found"
 }
 ```
-The API will return three error types when requests fail:
+The API has three error types when requests fail:
 
 400: Bad Request
+
 404: Resource Not Found
+
 422: Not Processable
 
-GET /api/categories 
-    Fetches a dictionary of all available categories
-    
+500: Server Error
+
+**GET /api/categories**
+
+Get all categories as format {key:value}
+
 Request parameters: none
-Example response:
+
+Target response:
 ```bash{
   "categories": {
     "1": "Science", 
@@ -93,10 +101,13 @@ Example response:
   "success": true
 }
 ```
-GET /api/questions?page=<page_number> Fetches a paginated dictionary of questions of all available categories
+**GET /api/questions?page=<page_number>** 
 
-Request parameters (optional): page:int
-Example response:
+get a paginated dictionary of questions of all categories
+
+Request parameters:`<page:int>` (by default=1)
+
+Target response:
  ```bash{
     "categories": {
         "1": "Science",
@@ -169,20 +180,26 @@ Example response:
     "total_questions": 8
 }
 ```
-DELETE /api/questions/<question_id> 
-    Delete an existing questions from the available questions
+DELETE /api/questions/`<question_id>`
+    
+Remove an question(s) from all questions
 
-Request arguments: question_id:int
-Example response:
-```bash{
+Request arguments: `<question_id:int>`
+
+Target response:
+
+```bash
+{
   "success": true
 }
 ```
-POST /api/questions 
-    Add a new question to the repository of available questions
+**POST /api/questions**
 
-Request body: {question:string, answer:string, difficulty:int, category:string}
-Example response:
+create a new question and it to all questions
+
+Request body: `{question:string, answer:string, difficulty:int, category:string}`
+
+Target response:
 ```bash{
     "categories": {
         "1": "Science",
@@ -263,11 +280,13 @@ Example response:
 }
 ```
 
-POST /api/questions/search 
-    Fetches all questions where a substring matches the search term (not case-sensitive)
+**POST /api/questions/search **
 
-Request body: {searchTerm:string}
-Example response:
+get all questions thate related to the search term (not case-sensitive)
+
+Request body: `{searchTerm:string}`
+
+Target response:
 ```bash{
     "current_category": null,
     "questions": [
@@ -298,9 +317,12 @@ Example response:
 }
 ```
 
-GET /api/categories/<int:category_id>/questions Fetches a dictionary of questions for the specified category
+**GET /api/categories/`<int:category_id>`/questions**
 
+get a dictionary of questions related to a specified category
 Request argument: category_id:int
+
+Target Response:
 ```{
   "current_category": "2", 
   "questions": [
@@ -337,10 +359,12 @@ Request argument: category_id:int
   "total_questions": 4
 }
 ```
-POST /api/quizzes Fetches one random question within a specified category. Previously asked questions are not asked again.
+**POST /api/quizzes**
 
-Request body: {previous_questions: arr, quiz_category: {id:int, type:string}}
-Example response:
+ get a random question in a specified category which this question not in previouse questions
+
+Request body: {previous_questions: arr, quiz_category: `{id:int, type:string}}`
+Target response:
 ```{
     "question": {
         "answer": "Jackson Pollock",
